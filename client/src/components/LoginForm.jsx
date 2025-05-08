@@ -38,7 +38,7 @@ const LoginForm = () => {
                         </label>
                         <input className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm
                         placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                        id="password" name="password" type="password" autoComplete="password" required value={password} placeholder="******************" onChange={(e) => setPassword(e.target.value)}/>
+                        id="password" name="password" type="password" autoComplete="password" required value={password} placeholder="******" onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                     <div className='flex items-center justify-between'>
                         <Link to="/forgot-password" className="text-sm text-blue-500 hover:text-blue-700">

@@ -10,7 +10,22 @@ const userSchema = new mongoose.Schema({
   genderPreference: { type: String, required: true, enum: ["male", "female", "both"] },
   bio: { type: String, default: "" },
   profilePicture: { type: String, default: "" },
-  
+  /*location: { 
+    type: {
+      type: String,
+      enum: ['Point'],
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number], // [longitude, latitude]
+      required: true
+    },
+    address: { type: String }
+  },
+  hobbies: [{ 
+    type: String,
+    required: false 
+  }],*/
   lastLogin: { type: Date, default: Date.now },
   verified: { type: Boolean, default: false },
   resetPasswordToken: String,
@@ -19,8 +34,6 @@ const userSchema = new mongoose.Schema({
   verificationTokenExpiresAt: Date,
   //weight: { type: Number, required: true },
   //height: { type: Number, required: true },
-  //location: { type: String, required: true },
-  //hobbies: { type: [String], required: false },
   //job: { type: String, required: false },
   //religion: { type: String, required: false },
   matches: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],

@@ -96,7 +96,27 @@ export const getUserProfiles = async (req, res) => {
                 // Based on Gender that the user prefer to match
                 { gender: currentUser.genderPreference === "both" ? { $in: ["male", "female"] } 
                 : currentUser.genderPreference },
-                { genderPreference: { $in: [currentUser.gender, "both" ]}}
+                { genderPreference: { $in: [currentUser.gender, "both" ]}},
+                // Match based on hobbies (if both users have hobbies)
+                /*...(currentUser.hobbies && currentUser.hobbies.length > 0 ? [{
+                    $or: [
+                        { hobbies: { $in: currentUser.hobbies } },
+                        { hobbies: { $exists: false } }
+                    ]
+                }] : []),
+                // Match based on location (within 50km radius if location exists)
+                ...(currentUser.location && currentUser.location.coordinates ? [{
+                    location: {
+                        $near: {
+                            $geometry: {
+                                type: "Point",
+                                coordinates: currentUser.location.coordinates
+                            },
+                            $maxDistance: 50000 // 50km in meters
+                        }
+                    }
+                }] : [])
+                */
             ]
         })
         res.status(200).json({ success: true, users })
@@ -104,6 +124,4 @@ export const getUserProfiles = async (req, res) => {
         console.log("Error in getUserProfiles: ", error);
         res.status(500).json({ success: false, message: "Server Error" });
     }
-
-
 };
