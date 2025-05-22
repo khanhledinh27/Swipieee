@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
 
-const SOCKET_URL = "http://localhost:5000";
+//modify for Deployment
+const SOCKET_URL = import.meta.env.MODE === "development" ? "http://localhost:5000" : "/"
 
 let socket = null;
 
@@ -15,9 +16,6 @@ export const initializeSocket = (userId) => {
 };
 
 export const getSocket = () => {
-    if (!socket) {
-        throw new Error("Socket not initialized. Call initializeSocket first.");
-    }
     return socket;
 }
 

@@ -88,7 +88,8 @@ export const useMatchStore = create((set) => ({
     unSubcribeToNewMatches: () => {
         try {
             const socket = getSocket();
-            socket.off("newMatch")
+            socket.off("newMatch");
+            socket.off("matchNotification");
         } catch (error) {
             console.log(error);
         }

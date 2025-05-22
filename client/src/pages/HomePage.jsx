@@ -21,9 +21,9 @@ const HomePage = () => {
 
   useEffect(() => {
     authUser && subscribeToNewMatches()
-    //return () => {
-    //   unSubcribeToNewMatches()
-    //}
+      return () => {
+        unSubcribeToNewMatches()
+      }
   }, [subscribeToNewMatches, unSubcribeToNewMatches, authUser])
 
   return (

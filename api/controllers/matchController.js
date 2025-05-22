@@ -26,10 +26,8 @@ export const swipeRight = async (req, res) => {
                 const io = getIO();
 
                 const likedUserSocketId = connectedUsers.get(likeUserId);
-                
-
                 if (likedUserSocketId) {
-                    io.to(likedUserSocketId).emit("match", {
+                    io.to(likedUserSocketId).emit("newMatch", {
                         _id: currentUser._id,
                         name: currentUser.name,
                         profilePicture: currentUser.profilePicture
