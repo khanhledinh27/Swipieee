@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from '../components/SideBar';
+import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import { useMatchStore } from '../store/useMatchStore';
 import { useEffect } from 'react';
