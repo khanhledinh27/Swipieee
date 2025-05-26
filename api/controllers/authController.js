@@ -14,7 +14,7 @@ const registerToken = (id) => {
 };
 //Sign up
 export const registerUser = async (req, res) => {
-    const { name, email, password, age, gender, genderPreference } = req.body;
+    const { name, email, password, dateOfBirth, gender, genderPreference } = req.body;
 
     try {
         const userExists = await User.findOne({ email });
@@ -23,10 +23,17 @@ export const registerUser = async (req, res) => {
             return res.status(400).json({ message: "User already exists" });
         }
         //check filled all the fields
-        if (!name || !email || !password || !age || !gender || !genderPreference) {
+        if (!name || !email || !password || !dateOfBirth || !gender || !genderPreference) {
             return res.status(400).json({ success: false, message: "You need to fill all the fields" });
         }
         //check age over 18 years old
+        const dob = new Date(dateOfBirth);
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const m = today.getMonth() - dob.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+            age--;
+        }
         if (age < 18) {
             return res.status(400).json({ success: false, message: "You need to be at least 18 years old to register" });
         }
@@ -37,7 +44,7 @@ export const registerUser = async (req, res) => {
 
 
         const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
-        const newUser = await User.create({ name, email, password, age, gender, genderPreference, verificationToken, verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000 });
+        const newUser = await User.create({ name, email, password, dateOfBirth: dob, gender, genderPreference, verificationToken, verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000 });
         const token = registerToken(newUser._id);
 
         await sendVerificationEmail(newUser.email, newUser.verificationToken);

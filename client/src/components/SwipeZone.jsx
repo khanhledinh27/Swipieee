@@ -2,6 +2,18 @@ import TinderCard from 'react-tinder-card';
 import { useMatchStore } from '../store/useMatchStore';
 
 
+const computeAge = (dobStr) => {
+    if (!dobStr) return "";
+    const dob = new Date(dobStr);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+        age--;
+    }
+    return age;
+};
+
 const SwipeZone = () => {
     const {userProfiles, swipeLeft, swipeRight} = useMatchStore();
 
@@ -22,11 +34,11 @@ const SwipeZone = () => {
             >
                 <div className='card bg-white w-96 h-[28rem] select-none rounded-lg overflow-hidden border border-gray-200 shadow-sm'>
                     <figure className='px-4 pt-4 h-3/4'>
-                        <img src={user.image || "/avatar.png"} alt={user.name} className='pointer-events-none h-full object-cover rounded-lg' />
+                        <img src={user.profilePicture || "/avatar.png"} alt={user.name} className='pointer-events-none h-full object-cover rounded-lg' />
                     </figure>
                     <div className='card-body bg-gradient-to-b from-white to-blue-50'>
                         <h2 className='card-title text-2xl text-black'>
-                            {user.name}, {user.age}
+                            {user.name}, {computeAge(user.dateOfBirth)}
                         </h2>
                         <p className='text-gray-600'>{user.bio}</p>
                     </div>

@@ -8,7 +8,7 @@ const RegisterForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [gender, setGender] = useState("");
-    const [age, setAge] = useState("");
+    const [dateOfBirth, setDateOfBirth] = useState(""); // changed from age
     const [genderPreference, setGenderPreference] = useState("");
     const { signup, loading } = useAuthStore();
 
@@ -24,7 +24,7 @@ const RegisterForm = () => {
                 <form className='space-y-6' 
                     onSubmit={(e) => { 
                     e.preventDefault() 
-                    signup({ name, email, password, age, gender, genderPreference });
+                    signup({ name, email, password, dateOfBirth, gender, genderPreference });
                      }}>
                     {/*Name*/}
                     <div className="grid grid-cols-2 gap-4">
@@ -37,13 +37,13 @@ const RegisterForm = () => {
                             id="name" name="name" type="text" required value={name} onChange={(e) => setName(e.target.value)}/>
                         </div>
                         <div>
-                    {/*Age*/}
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="age">
-                                Age
+                    {/*Date of Birth*/}
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dateOfBirth">
+                                Date of Birth
                             </label>
                             <input className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm
                         placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                            id="age" name="age" type="number" required value={age} min='18' max='100' onChange={(e) => setAge(e.target.value)}/>
+                            id="dateOfBirth" name="dateOfBirth" type="date" required value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)}/>
                         </div>
                     </div>
 

@@ -56,11 +56,13 @@ const generateRandomUser = (gender, index) => {
 	const names = gender === "male" ? maleNames : femaleNames;
 	const name = names[index];
 	const age = Math.floor(Math.random() * (45 - 21 + 1) + 21);
+	const today = new Date();
+	const dob = new Date(today.getFullYear() - age, today.getMonth(), today.getDate());
 	return {
 		name,
 		email: `${name.toLowerCase()}${age}@example.com`,
 		password: bcrypt.hashSync("password123", 10),
-		age,
+		dateOfBirth: dob,
 		gender,
 		genderPreference: genderPreferences[Math.floor(Math.random() * genderPreferences.length)],
 		bio: generateBio(),

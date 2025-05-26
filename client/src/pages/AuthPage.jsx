@@ -2,6 +2,7 @@ import { useState, React } from 'react';
 import { motion } from 'framer-motion';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
+import CoupleLoveSVG from '../assets/undraw_couple-love_32ys.svg';
 
 const AuthPage = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -13,40 +14,51 @@ const AuthPage = () => {
     };
 
     return (
-        <div className='min-h-screen flex items-center justify-center p-4' style={{ backgroundImage: "url('../src/assets/background.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+        <div className="min-h-screen flex items-center justify-center bg-white">
+            {/* Left Illustration */}
+            <div className="hidden md:flex flex-1 items-center justify-center">
+                {/* Replace src with your illustration path or SVG */}
+                <img
+                    src={CoupleLoveSVG}
+                    alt="Login Illustration"
+                    className="max-w-md w-full"
+                    draggable={false}
+                />
+            </div>
+            {/* Right Form */}
             <motion.div
-                className='w-full max-w-md'
+                className="flex-1 flex items-center justify-center"
                 initial="hidden"
                 animate="visible"
                 exit="exit"
                 variants={containerVariants}
             >
-                <h2 className='text-center text-3xl font-extrabold text-white mb-8'>
-                    {isLogin ? "Sign in to Swipieee" : "Create a Swipieee account"}
-                </h2>
-
-                <motion.div
-                    className='bg-white shadow-xl rounded-lg p-8'
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    {isLogin ? <LoginForm /> : <RegisterForm />}
-
-                    <div className='mt-8 text-center'>
-                        <p className='text-sm text-gray-600'>
-                            {isLogin ? "New to Swipieee?" : "Already have an account!"}
-                        </p>
-                        <motion.button
-                            onClick={() => setIsLogin((prevIsLogin) => !prevIsLogin)}
-                            className='mt-2 text-blue-600 hover:text-blue-800 font-medium transition-colors duration-300'
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                        >
-                            {isLogin ? "Create a new account" : "Sign in to your account"}
-                        </motion.button>
-                    </div>
-                </motion.div>
+                <div className="w-full max-w-md">
+                    <h2 className="text-2xl font-bold mb-8 text-center" style={{ fontFamily: 'inherit' }}>
+                        <span className="font-semibold">Welcome to <span className="italic font-bold">Swipieee</span></span>
+                    </h2>
+                    <motion.div
+                        className="bg-white shadow-xl rounded-lg p-8"
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        {isLogin ? <LoginForm /> : <RegisterForm />}
+                        <div className="mt-8 text-center">
+                            <p className="text-sm text-gray-600">
+                                {isLogin ? "New to Swipieee?" : "Already have an account!"}
+                            </p>
+                            <motion.button
+                                onClick={() => setIsLogin((prevIsLogin) => !prevIsLogin)}
+                                className="mt-2 text-blue-600 hover:text-blue-800 font-medium transition-colors duration-300"
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}
+                            >
+                                {isLogin ? "Create a new account" : "Sign in to your account"}
+                            </motion.button>
+                        </div>
+                    </motion.div>
+                </div>
             </motion.div>
         </div>
     );
