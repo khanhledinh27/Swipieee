@@ -2,14 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../store/useUserStore";
 import { toast } from "react-hot-toast";
-
-// List of available hobbies (customize as needed)
-const HOBBY_OPTIONS = [
-  "Reading", "Sports", "Gaming", "Cooking", "Traveling",
-  "Photography", "Music", "Art", "Dancing", "Hiking",
-  "Cycling", "Swimming", "Yoga", "Movies", "Writing",
-  "Gardening", "Fishing", "Chess", "Programming", "Shopping"
-];
+import { HOBBY_OPTIONS } from '../data/profileOptions.js';
+import { Loader } from "lucide-react";
 
 const HobbyPickPage = () => {
   const [selectedHobbies, setSelectedHobbies] = useState([]);
@@ -32,40 +26,72 @@ const HobbyPickPage = () => {
 
     try {
       await updateProfile({ hobbies: selectedHobbies });
-      navigate("/"); // Redirect to home after saving
+      toast.success("Hobbies saved successfully!");
+      navigate("/");
     } catch (error) {
+      toast.error("Failed to save hobbies");
       console.error("Error saving hobbies:", error);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Pick Your Hobbies</h1>
-      <p className="mb-6">Select hobbies that interest you. This will help us find better matches for you.</p>
-      
-      <div className="flex flex-wrap gap-2 mb-8">
-        {HOBBY_OPTIONS.map(hobby => (
-          <button
-            key={hobby}
-            onClick={() => toggleHobby(hobby)}
-            className={`px-4 py-2 rounded-full text-sm ${
-              selectedHobbies.includes(hobby)
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-800"
-            }`}
-          >
-            {hobby}
-          </button>
-        ))}
-      </div>
+    <div className="min-h-screen bg-gray-50 p-4 md:p-6">
+      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 md:p-8">
+        <div className="mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+            Pick Your Hobbies
+          </h1>
+          <p className="text-gray-600 text-sm md:text-base">
+            Select at least 3 hobbies that interest you. This helps us find better matches.
+          </p>
+        </div>
 
-      <button
-        onClick={handleSubmit}
-        disabled={loading}
-        className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:opacity-50"
-      >
-        {loading ? "Saving..." : "Save Hobbies"}
-      </button>
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2 md:gap-3">
+            {HOBBY_OPTIONS.map(hobby => (
+              <button
+                key={hobby}
+                onClick={() => toggleHobby(hobby)}
+                className={`px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm transition-all duration-200 ${
+                  selectedHobbies.includes(hobby)
+                    ? "bg-blue-500 text-white shadow-md"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                {hobby}
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-gray-500 mt-3">
+            Selected: {selectedHobbies.length} {selectedHobbies.length === 1 ? "hobby" : "hobbies"}
+          </p>
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          disabled={loading || selectedHobbies.length === 0}
+          className={`w-full flex items-center justify-center py-3 px-4 rounded-lg text-white font-medium transition-colors ${
+            loading || selectedHobbies.length === 0
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-blue-500 hover:bg-blue-600 shadow-md"
+          }`}
+        >
+          {loading ? (
+            <>
+              <Loader className="animate-spin mr-2 h-4 w-4" />
+              Saving...
+            </>
+          ) : (
+            "Save Hobbies"
+          )}
+        </button>
+
+        {selectedHobbies.length > 0 && (
+          <p className="text-xs text-gray-500 mt-3 text-center">
+            You can always update these later in your profile settings
+          </p>
+        )}
+      </div>
     </div>
   );
 };

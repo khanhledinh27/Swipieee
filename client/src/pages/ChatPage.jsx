@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { UserX, Loader } from 'lucide-react'
 import MessageInput from '../components/MessageInput'
+import { useRef } from 'react'
 
 const ChatPage = () => {
   const {messages, getMessages, subscribeToMessages, unSubscribeFromMessages} = useMessageStore()
@@ -16,6 +17,15 @@ const ChatPage = () => {
   const { id } = useParams()
   const match = matches.find(m => m?._id === id)
   
+  const messagesEndRef = useRef(null)
+  // Auto-scroll to the lastest message
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
   useEffect(() => {
     if(authUser && id) {
         getMyMatches();
@@ -29,7 +39,7 @@ const ChatPage = () => {
   
   if(isLoadingMyMatches) return <LoadingMessagesUI />
   if(!match) return <MatchNotFound />
-
+  
   return (
     <div className='flex flex-col h-screen bg-gray-100 bg-opacity-50'>
       
@@ -55,11 +65,14 @@ const ChatPage = () => {
                   : "bg-gray-200 text-gray-800"
                 }
                 }`}>
-                {msg.content}
+                  <div className="whitespace-pre-wrap break-words">
+                      {msg.content}
+                  </div>
                 </span>
               </div>
             ))
           )}
+          <div ref={messagesEndRef} />
         </div>
 
         <MessageInput match={match} />
