@@ -96,12 +96,13 @@ export const getUserProfiles = async (req, res) => {
                 : currentUser.genderPreference },
                 { genderPreference: { $in: [currentUser.gender, "both" ]}},
                 // Match based on hobbies (if both users have hobbies)
-                /*...(currentUser.hobbies && currentUser.hobbies.length > 0 ? [{
+                ...(currentUser.hobbies && currentUser.hobbies.length > 0 ? [{
                     $or: [
                         { hobbies: { $in: currentUser.hobbies } },
                         { hobbies: { $exists: false } }
                     ]
                 }] : []),
+                /*
                 // Match based on location (within 50km radius if location exists)
                 ...(currentUser.location && currentUser.location.coordinates ? [{
                     location: {
