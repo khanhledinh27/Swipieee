@@ -19,11 +19,6 @@ const HobbyPickPage = () => {
   };
 
   const handleSubmit = async () => {
-    if (selectedHobbies.length === 0) {
-      toast.error("Please select at least one hobby");
-      return;
-    }
-
     try {
       await updateProfile({ hobbies: selectedHobbies });
       toast.success("Hobbies saved successfully!");
@@ -33,6 +28,8 @@ const HobbyPickPage = () => {
       console.error("Error saving hobbies:", error);
     }
   };
+
+  const hasMinimumHobbies = selectedHobbies.length >= 3;
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
@@ -64,16 +61,21 @@ const HobbyPickPage = () => {
           </div>
           <p className="text-xs text-gray-500 mt-3">
             Selected: {selectedHobbies.length} {selectedHobbies.length === 1 ? "hobby" : "hobbies"}
+            {!hasMinimumHobbies && (
+              <span className="text-red-500 ml-2">
+                (Select {3 - selectedHobbies.length} more to continue)
+              </span>
+            )}
           </p>
         </div>
 
         <button
           onClick={handleSubmit}
-          disabled={loading || selectedHobbies.length === 0}
+          disabled={loading || !hasMinimumHobbies}
           className={`w-full flex items-center justify-center py-3 px-4 rounded-lg text-white font-medium transition-colors ${
-            loading || selectedHobbies.length === 0
+            loading || !hasMinimumHobbies
               ? "bg-gray-300 cursor-not-allowed"
-              : "bg-blue-500 hover:bg-blue-600 shadow-md"
+              : "bg-blue-600 hover:bg-blue-700 shadow-md"
           }`}
         >
           {loading ? (
@@ -86,7 +88,7 @@ const HobbyPickPage = () => {
           )}
         </button>
 
-        {selectedHobbies.length > 0 && (
+        {hasMinimumHobbies && (
           <p className="text-xs text-gray-500 mt-3 text-center">
             You can always update these later in your profile settings
           </p>
