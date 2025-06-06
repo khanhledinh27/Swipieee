@@ -127,7 +127,7 @@ const generateBio = () => {
 };
 
 const generateRandomHobbies = () => {
-  const count = Math.floor(Math.random() * 4) + 1; // 1-4 hobbies
+  const count = Math.floor(Math.random() * 2) + 3;
   return [...HOBBY_OPTIONS]
     .sort(() => 0.5 - Math.random())
     .slice(0, count);

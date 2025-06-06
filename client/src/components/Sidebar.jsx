@@ -17,13 +17,13 @@ const Sidebar = () => {
 
   return (
     <>
-        <div className={`fixed inset-y-0 z-10 w-64 bg-white shadow-md overflow-hidden transition-transform duration-300
+        <div className={`fixed inset-y-0 z-10 w-64 bg-blue-50 shadow-md overflow-hidden transition-transform duration-300
         ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0 lg:static lg:w-1/4`}>
             <div className='flex flex-col h-full p-4'>
                 {/* Header */}
-                <div className='p-4 pb-[11px] border-b border-blue-500 flex justify-between items-center'>
-                    <h2 className='text-xl font-bold text-blue-700'> Matches</h2>
+                <div className='p-4 pb-[11px] border-b border-rose-400 flex justify-between items-center'>
+                    <h2 className='text-xl font-bold text-rose-700'> Matches</h2>
                     <button className='lg:hidden p-1 text-black hover:text-white focus:outline-none'
                     onClick={toggleSidebar}>
                         <X size={24} />
@@ -33,7 +33,7 @@ const Sidebar = () => {
                 ? <NoMatchesFound /> : (matches.map(match => (
                     <Link key={match._id} to={`/chat/${match._id}`}>
                         <div className='flex items-center mb-4 cursor-pointer hover:bg-blue-50 p-2 rounded-lg transition-colors duration-300'>
-                            <img src={match.profilePicture || "/avatar.png"} alt={match.name} className='w-12 h-12 rounded-full mr-3 border-2 border-blue-300' />
+                            <img src={match.profilePicture || "/avatar.png"} alt={match.name} className='w-12 h-12 rounded-full mr-3 border-2 border-rose-300' />
                             <h3 className='font-semibold text-black'>{match.name}</h3>
                         </div>
                     </Link>
@@ -63,7 +63,7 @@ const LoadingState = () => {
 const NoMatchesFound = () => {
     return (
         <div className='flex flex-col items-center justify-center h-full text-center'>
-            <Heart className='text-blue-400 mb-4' size={48}/>
+            <Heart className='text-rose-400 mb-4' size={48}/>
             <h3 className='text-xl font-semibold text-black mb-2'>No Matches Yet</h3>
             <p className='text-black max-w-xs'>Don&apos;t worry! Your perfect match is just around the corner. Keep Sweepieee!</p>
         </div>

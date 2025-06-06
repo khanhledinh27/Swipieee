@@ -41,13 +41,13 @@ const ChatPage = () => {
   if(!match) return <MatchNotFound />
   
   return (
-    <div className='flex flex-col h-screen bg-gray-100 bg-opacity-50'>
+    <div className='flex flex-col h-screen bg-blue-50 bg-opacity-50'>
       
       <Header />
 
       <div className='flex-grow flex flex-col p-4 md:p-6 lg:p-8 overflow-hidden
       max-w-4xl mx-auto w-full'> 
-        <div className='flex items-center bg-white rounded-lg shadow p-3 mb-4'>
+        <div className='flex items-center bg-white rounded-lg shadow p-3 mb-4 border-l-4 border-blue-400'>
           <img src={match.profilePicture || "/avatar.png"}
           className='w-12 h-12 object-cover rounded-full mr-3 border-2 border-blue-300' />
           <h2 className='text-xl font-semibold text-gray-800'>{match.name}</h2>
@@ -61,8 +61,8 @@ const ChatPage = () => {
             className={`mb-3 ${msg.sender === authUser._id ? "text-right" : "text-left"}`}>
               <span className={`inline-block p-3 rounded-lg max-w-xs lg:max-w-md ${
                 msg.sender === authUser._id
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-800"
+                ? "bg-rose-500 text-white"
+                : "bg-blue-100 text-blue-800"
                 }
                 }`}>
                   <div className="whitespace-pre-wrap break-words">

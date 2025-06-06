@@ -3,7 +3,7 @@ import TinderCard from 'react-tinder-card';
 import { useMatchStore } from '../store/useMatchStore';
 import { FaMapMarkerAlt, FaHeart, FaUser, FaBriefcase, FaPrayingHands, FaRulerVertical, FaWeight } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
-import { GiWeightLiftingUp } from 'react-icons/gi';
+import { FaInfoCircle } from 'react-icons/fa';
 import UserDetailModal from './UserDetailModal';
 
 const computeAge = (dobStr) => {
@@ -78,7 +78,15 @@ const SwipeZone = () => {
                                 className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105'
                             />
                             <div className='absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80'></div>
-                            
+                            <button 
+                                onClick={(e) => {
+                                e.stopPropagation();
+                                openModal(user);
+                                }}
+                                className="absolute top-4 right-4 bg-white/80 p-2 rounded-full z-10"
+                            >
+                                <FaInfoCircle className="text-blue-500" size={20} />
+                            </button>
                             {/* Basic Info Overlay */}
                             <div className='absolute bottom-0 left-0 right-0 p-4 text-white'>
                                 <div className='flex justify-between items-end'>
@@ -157,17 +165,6 @@ const SwipeZone = () => {
                                     <p className='text-gray-400 italic text-sm'>No bio provided</p>
                                 )}
                             </div>
-                            
-                            {/* Click to see more */}
-                            <button 
-                                className='text-blue-500 text-sm font-medium'
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    openModal(user);
-                                }}
-                            >
-                                Tap to see more details →
-                            </button>
                         </div>
                     </div>
                 </TinderCard>

@@ -83,44 +83,126 @@ export const getMatches = async (req, res) => {
 export const getUserProfiles = async (req, res) => {
     try {
         const currentUser = await User.findById(req.user.id);
-        //For filter
-        const users = await User.find({
+        
+        // 1. Define age range (±5 years from current user's age)
+        const minAge = currentUser.age - 5;
+        const maxAge = currentUser.age + 5;
+        
+        // Calculate birth date range for age filtering
+        const minBirthDate = new Date();
+        minBirthDate.setFullYear(minBirthDate.getFullYear() - maxAge - 1);
+        
+        const maxBirthDate = new Date();
+        maxBirthDate.setFullYear(maxBirthDate.getFullYear() - minAge);
+
+        // 2. Base query (gender, age, excluded users)
+        const baseQuery = {
             $and: [
-                { _id: {$ne: currentUser.id} }, //Prevent match your own profile
-                // Prevent match the Profiles that liked, disliked or matched
-                { _id: {$nin: currentUser.likedBy} },
-                { _id: {$nin: currentUser.dislikedBy} },
-                { _id: {$nin: currentUser.matches} },
-                // Based on Gender that the user prefer to match
-                { gender: currentUser.genderPreference === "both" ? { $in: ["male", "female"] } 
-                : currentUser.genderPreference },
-                { genderPreference: { $in: [currentUser.gender, "both" ]}},
-                // Match based on hobbies (if both users have hobbies)
-                ...(currentUser.hobbies && currentUser.hobbies.length > 0 ? [{
-                    $or: [
-                        { hobbies: { $in: currentUser.hobbies } },
-                        { hobbies: { $exists: false } }
-                    ]
-                }] : []),
-                /*
-                // Match based on location (within 50km radius if location exists)
-                ...(currentUser.location && currentUser.location.coordinates ? [{
-                    location: {
-                        $near: {
-                            $geometry: {
-                                type: "Point",
-                                coordinates: currentUser.location.coordinates
-                            },
-                            $maxDistance: 50000 // 50km in meters
+                { _id: { $ne: currentUser._id } },
+                { _id: { $nin: currentUser.likedBy } },
+                { _id: { $nin: currentUser.dislikedBy } },
+                { _id: { $nin: currentUser.matches } },
+                // Gender preference
+                { 
+                    gender: currentUser.genderPreference === "both" 
+                        ? { $in: ["male", "female"] } 
+                        : currentUser.genderPreference 
+                },
+                // Their preference includes current user's gender
+                { 
+                    genderPreference: { 
+                        $in: [currentUser.gender, "both"] 
+                    } 
+                },
+                // Age range
+                { 
+                    dateOfBirth: { 
+                        $gte: minBirthDate, 
+                        $lte: maxBirthDate 
+                    } 
+                },
+            ],
+        };
+
+        // 3. Add hobby matching with minimum 2 shared hobbies
+        if (currentUser.hobbies?.length >= 2) {
+            // Create an array of $and conditions for each hobby combination
+            const hobbyCombinations = [];
+            
+            // Generate all possible pairs of hobbies (for minimum 2 matches)
+            for (let i = 0; i < currentUser.hobbies.length; i++) {
+                for (let j = i + 1; j < currentUser.hobbies.length; j++) {
+                    hobbyCombinations.push({
+                        hobbies: { 
+                            $all: [
+                                currentUser.hobbies[i],
+                                currentUser.hobbies[j]
+                            ]
                         }
-                    }
-                }] : [])
-                */
-            ]
-        })
-        res.status(200).json({ success: true, users })
+                    });
+                }
+            }
+            
+            // Add $or condition to match any of the hobby pairs
+            baseQuery.$and.push({
+                $or: hobbyCombinations
+            });
+        }
+
+        // 4. Fetch users with smart sorting
+        const users = await User.find(baseQuery)
+            .select("-password -verified -tokens") // Exclude sensitive data
+            .lean() // Convert to plain JS objects for aggregation
+            .exec();
+
+        // 5. Enhanced sorting by relevance (hobby matches + last activity)
+        const sortedUsers = users
+            .map(user => {
+                // Calculate hobby match score
+                const hobbyMatches = currentUser.hobbies?.length 
+                    ? user.hobbies?.filter(hobby => 
+                        currentUser.hobbies.includes(hobby))
+                    : [];
+                const hobbyScore = hobbyMatches.length;
+
+                return {
+                    ...user,
+                    hobbyMatches: hobbyMatches, // Include matched hobbies
+                    hobbyScore: hobbyScore, // For sorting
+                    // Add match percentage (optional)
+                    matchPercentage: Math.round(
+                        (hobbyMatches.length / Math.max(
+                            currentUser.hobbies.length, 
+                            user.hobbies.length
+                        )) * 100
+                    )
+                };
+            })
+            .sort((a, b) => {
+                // Primary sort: Hobby matches (descending)
+                if (a.hobbyScore > b.hobbyScore) return -1;
+                if (a.hobbyScore < b.hobbyScore) return 1;
+                
+                // Secondary sort: Match percentage (if same number of matches)
+                if (a.matchPercentage > b.matchPercentage) return -1;
+                if (a.matchPercentage < b.matchPercentage) return 1;
+                
+                // Tertiary sort: Last login (newest first)
+                return new Date(b.lastLogin) - new Date(a.lastLogin);
+            });
+
+        res.status(200).json({ 
+            success: true, 
+            users: sortedUsers,
+            meta: {
+                hobbyMatches: currentUser.hobbies?.length >= 2,
+                totalResults: sortedUsers.length,
+                minHobbyMatches: 2 // Indicate we're requiring 2+ shared hobbies
+            }
+        });
+
     } catch (error) {
-        console.log("Error in getUserProfiles: ", error);
+        console.error("Error in getUserProfiles: ", error);
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };

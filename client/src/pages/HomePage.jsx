@@ -27,7 +27,7 @@ const HomePage = () => {
   }, [subscribeToNewMatches, unSubcribeToNewMatches, authUser])
 
   return (
-    <div className='flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-white to-blue-300 overflow-hidden'>
+    <div className='flex flex-col lg:flex-row min-h-screen bg-gradient-to-br from-blue-50 to-rose-50 overflow-hidden'>
       <Sidebar />
       <div className='flex-grow flex flex-col overflow-hidden'>
         <Header />

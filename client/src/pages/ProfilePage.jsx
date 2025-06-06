@@ -108,7 +108,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className='min-h-screen bg-gray-100 flex flex-col'>
+    <div className='min-h-screen bg-blue-50 flex flex-col'>
       <Header />
       <div className='flex-grow flex flex-col py-4 px-4 sm:px-6 lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-6xl'>
@@ -116,7 +116,7 @@ const ProfilePage = () => {
         </div>
 
         {/* Changed to flex-col on mobile */}
-        <div className='mt-6 sm:mx-auto sm:w-full sm:max-w-6xl bg-white rounded-lg shadow border border-gray-200 flex flex-col lg:flex-row'>
+        <div className='mt-6 sm:mx-auto sm:w-full sm:max-w-6xl bg-white rounded-lg shadow border border-blue-100 flex flex-col lg:flex-row'>
           {/* Left Column - Now full width on mobile */}
           <div className="w-full lg:w-1/3 p-4 lg:p-6 border-b lg:border-r lg:border-b-0 border-gray-200 flex flex-col items-center">
             <div className="relative mb-4">
@@ -138,7 +138,7 @@ const ProfilePage = () => {
               <button 
                 type='button' 
                 onClick={() => fileInputRef.current.click()}
-                className='w-1/2 sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+                className='w-1/2 sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rose-600 hover:bg-rose-700'
               >
                 Change Avatar
               </button>
@@ -171,7 +171,7 @@ const ProfilePage = () => {
                   <button 
                     type="button" 
                     onClick={() => albumInputRef.current.click()}
-                    className="w-full inline-flex justify-center items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="w-full inline-flex justify-center items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-rose-600 hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                   >
                     Add Photos ({4 - photoAlbum.length} remaining)
                   </button>
@@ -209,7 +209,7 @@ const ProfilePage = () => {
                       value={name} 
                       required 
                       onChange={(e) => setName(e.target.value)}
-                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     />
                   </div>
                   <div>
@@ -219,7 +219,7 @@ const ProfilePage = () => {
                       value={dateOfBirth} 
                       required 
                       onChange={(e) => setDateOfBirth(e.target.value)}
-                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     />
                     <div className='text-xs sm:text-sm text-gray-500 mt-1'>
                       Age: {computeAge(dateOfBirth)}
@@ -230,7 +230,7 @@ const ProfilePage = () => {
                     <select
                       value={gender}
                       onChange={(e) => setGender(e.target.value)}
-                      className='mt-1 block w-full px-3 py-2 text-sm border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+                      className='mt-1 block w-full px-3 py-2 text-sm border-gray-300 rounded-md focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
                       <option value="" disabled>Select Gender</option>
                       <option value="male">Male</option>
@@ -242,7 +242,7 @@ const ProfilePage = () => {
                     <select
                       value={genderPreference}
                       onChange={(e) => setGenderPreference(e.target.value)}
-                      className='mt-1 block w-full px-3 py-2 text-sm border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+                      className='mt-1 block w-full px-3 py-2 text-sm border-gray-300 rounded-md focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
                       <option value="" disabled>Select Preference</option>
                       <option value="male">Male</option>
@@ -262,7 +262,7 @@ const ProfilePage = () => {
                     rows={3} 
                     value={bio} 
                     onChange={(e) => setBio(e.target.value)}
-                    className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+                    className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     placeholder="Tell others about yourself..."
                   />
                 </div>
@@ -283,7 +283,7 @@ const ProfilePage = () => {
                         selectedHobbies.map(hobby => (
                           <span 
                             key={hobby} 
-                            className='inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800'
+                            className='inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800'
                           >
                             {hobby}
                           </span>
@@ -304,7 +304,7 @@ const ProfilePage = () => {
                             <div className="flex items-center">
                               <input
                                 type="checkbox"
-                                className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                                className="h-4 w-4 text-rose-600 border-gray-300 rounded focus:ring-rose-500"
                                 checked={selectedHobbies.includes(hobby)}
                                 readOnly
                               />
@@ -322,7 +322,7 @@ const ProfilePage = () => {
                     <select
                       value={job}
                       onChange={(e) => setJob(e.target.value)}
-                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
                       <option value="" disabled>Select Job</option>
                       {JOB_OPTIONS.map(option => (
@@ -335,7 +335,7 @@ const ProfilePage = () => {
                     <select
                       value={religion}
                       onChange={(e) => setReligion(e.target.value)}
-                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
                       <option value="" disabled>Select Religion</option>
                       {RELIGION_OPTIONS.map(option => (
@@ -348,7 +348,7 @@ const ProfilePage = () => {
                     <select
                       value={height}
                       onChange={(e) => setHeight(e.target.value)}
-                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
                       <option value="" disabled>Select Height</option>
                       {HEIGHT_OPTIONS.map(option => (
@@ -361,7 +361,7 @@ const ProfilePage = () => {
                     <select
                       value={weight}
                       onChange={(e) => setWeight(e.target.value)}
-                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
                       <option value="" disabled>Select Weight</option>
                       {WEIGHT_OPTIONS.map(option => (
@@ -374,7 +374,7 @@ const ProfilePage = () => {
                     <select
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
-                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+                      className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
                       <option value="" disabled>Select Location</option>
                       {LOCATION_OPTIONS.map(option => (
@@ -386,10 +386,10 @@ const ProfilePage = () => {
               </div>
 
               {/* Fixed Footer with Update Button */}
-              <div className='sticky bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50'>
+              <div className='sticky bottom-0 left-0 right-0 p-4 border-t border-rose-200 bg-rose-50'>
                 <button 
                   type='submit' 
-                  className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+                  className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
                   disabled={loading}
                 >
                   {loading ? 'Updating Profile...' : 'Update Profile'}
