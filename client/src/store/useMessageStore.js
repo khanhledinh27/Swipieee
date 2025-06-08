@@ -7,10 +7,10 @@ import { useAuthStore } from './useAuthStore';
 // Define the handler outside so the same reference is used for on/off
 const handleNewMessage = (message) => {
     const { currentChatUserId } = useMessageStore.getState();
-    // Only add if the message is for the current chat
+    // Convert both to strings for comparison
     if (
-        message.sender === currentChatUserId ||
-        message.receiver === currentChatUserId
+        String(message.sender) === String(currentChatUserId) ||
+        String(message.receiver) === String(currentChatUserId)
     ) {
         useMessageStore.setState(state => {
             const messageExists = state.messages.some(
@@ -23,6 +23,13 @@ const handleNewMessage = (message) => {
             return state;
         });
     }
+};
+const handleStatusUpdate = (updatedMessage) => {
+    useMessageStore.setState(state => ({
+        messages: state.messages.map(msg => 
+            msg._id === updatedMessage._id ? updatedMessage : msg
+        )
+    }));
 };
 export const useMessageStore = create((set) => ({
     messages: [],
@@ -37,14 +44,31 @@ export const useMessageStore = create((set) => ({
                 messages: [...state.messages, { 
                     _id: Date.now(), // Temporary ID
                     content, 
-                    sender: useAuthStore.getState().authUser._id }]
+                    sender: useAuthStore.getState().authUser._id,
+                    status: 'sent', // Initial optimistic status
+                    createdAt: new Date().toISOString() // <-- Add this line
+                }]
+
             }))
             const res = await axiosInstance.post('/messages/send', { receiverId, content });
             // Optionally: Replace optimistic message with server message here
-            console.log("Message sent successfully: ", res.data);
+            set(state => ({
+                messages: state.messages.map(msg => 
+                    msg._id === Date.now() ? res.data.message : msg
+                )
+            }));
         } catch (error) {
-            // Optionally: Remove optimistic message here if send fails
-            toast.error(error.response.data.message || "Error in sendMessage: ");
+            set(state => ({
+                messages: state.messages.filter(msg => msg._id !== Date.now())
+            }));
+            toast.error(error.response.data.message || "Error sending message");
+        }
+    },
+    updateMessageStatus: async (messageId, status) => {
+        try {
+            await axiosInstance.post('/messages/update-status', { messageId, status });
+        } catch (error) {
+            console.log("Error updating message status: ", error);
         }
     },
     getMessages: async (userId) => {
@@ -64,6 +88,7 @@ export const useMessageStore = create((set) => ({
         const socket = getSocket();
         if (socket) {
             socket.on("newMessage", handleNewMessage);
+            socket.on("messageStatusUpdate", handleStatusUpdate);
         }
     },
 
@@ -71,6 +96,7 @@ export const useMessageStore = create((set) => ({
         const socket = getSocket();
         if (socket) {
             socket.off("newMessage", handleNewMessage);
+            socket.off("messageStatusUpdate", handleStatusUpdate);
         }
     }
 

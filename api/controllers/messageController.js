@@ -8,7 +8,8 @@ export const sendMessage = async(req, res) => {
         const newMessage = await Message.create({
             sender: req.user.id,
             receiver: receiverId,
-            content
+            content,
+            status: "sent" // Initial status
         });
 
         //Send messages in realtime using Socket.Io
@@ -41,5 +42,34 @@ export const getConversation = async(req, res) => {
     } catch (error) {
         console.log("Error in getConversation: ", error);
         res.status(500).json({ success: false, messages: "Server Error" });
+    }
+};
+export const updateMessageStatus = async(req, res) => {
+    try {
+        const { messageId, status } = req.body;
+        
+        const message = await Message.findByIdAndUpdate(
+            messageId,
+            { status },
+            { new: true }
+        );
+
+        if (!message) {
+            return res.status(404).json({ success: false, message: "Message not found" });
+        }
+
+        // Notify users about status change
+        const io = getIO();
+        const connectedUsers = getConnectedUsers();
+
+        const receiverSocketId = connectedUsers.get(message.receiver.toString());
+        const senderSocketId = connectedUsers.get(message.sender.toString());
+
+        io.to([receiverSocketId, senderSocketId].filter(Boolean)).emit("messageStatusUpdate", message);
+
+        res.status(200).json({ success: true, message });
+    } catch (error) {
+        console.log("Error in updateMessageStatus: ", error);
+        res.status(500).json({ success: false, message: "Server Error" });
     }
 };
