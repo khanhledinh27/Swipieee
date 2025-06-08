@@ -4,36 +4,26 @@ import { toast } from 'react-hot-toast';
 import { getSocket } from '../socket/socket.client';
 import { useAuthStore } from './useAuthStore';
 
-// Define handlers outside so the same reference is used for on/off
+// Define the handler outside so the same reference is used for on/off
 const handleNewMessage = (message) => {
     const { currentChatUserId } = useMessageStore.getState();
+    // Only add if the message is for the current chat
     if (
         message.sender === currentChatUserId ||
         message.receiver === currentChatUserId
     ) {
         useMessageStore.setState(state => {
             const messageExists = state.messages.some(
-                msg => msg._id === message._id || 
+                msg => msg._id === message._id ||
                     (msg.content === message.content && msg.sender === message.sender)
             );
-            
             if (!messageExists) {
                 return { messages: [...state.messages, message] };
             }
             return state;
         });
     }
-    
 };
-
-const handleStatusUpdate = (updatedMessage) => {
-    useMessageStore.setState(state => ({
-        messages: state.messages.map(msg => 
-            msg._id === updatedMessage._id ? updatedMessage : msg
-        )
-    }));
-};
-
 export const useMessageStore = create((set) => ({
     messages: [],
     loading: true,
@@ -41,45 +31,22 @@ export const useMessageStore = create((set) => ({
 
     setCurrentChatUserId: (userId) => set({ currentChatUserId: userId }),
     sendMessage: async (receiverId, content) => {
-        const tempId = Date.now() + Math.random(); // Unique temp ID
         try {
-            // Optimistically add message with temporary ID and 'sent' status
+            // Optimistically add message
             set(state => ({
                 messages: [...state.messages, { 
-                    _id: tempId,
+                    _id: Date.now(), // Temporary ID
                     content, 
-                    sender: useAuthStore.getState().authUser._id,
-                    receiver: receiverId,
-                    status: 'sent'
-                }]
-            }));
-            
+                    sender: useAuthStore.getState().authUser._id }]
+            }))
             const res = await axiosInstance.post('/messages/send', { receiverId, content });
-            
-            // Replace optimistic message with server message
-            set(state => ({
-                messages: state.messages.map(msg => 
-                    msg._id === tempId ? res.data.message : msg
-                )
-            }));
-            
+            // Optionally: Replace optimistic message with server message here
+            console.log("Message sent successfully: ", res.data);
         } catch (error) {
-            // Remove optimistic message if send fails
-            set(state => ({
-                messages: state.messages.filter(msg => msg._id !== tempId)
-            }));
-            toast.error(error.response?.data?.message || "Error sending message");
+            // Optionally: Remove optimistic message here if send fails
+            toast.error(error.response.data.message || "Error in sendMessage: ");
         }
     },
-
-    updateMessageStatus: async (messageId, status) => {
-        try {
-            await axiosInstance.post('/messages/update-status', { messageId, status });
-        } catch (error) {
-            console.log("Error updating message status: ", error);
-        }
-    },
-
     getMessages: async (userId) => {
         try {
             set({ loading: true });
@@ -87,7 +54,7 @@ export const useMessageStore = create((set) => ({
             set({ messages: res.data.messages });
         } catch (error) {
             console.log("Error in getMessages: ", error);
-            set({ messages: [] });
+            set({ messages: [] }); // Optionally: Do not clear messages on error
         } finally {
             set({ loading: false });
         }
@@ -97,7 +64,6 @@ export const useMessageStore = create((set) => ({
         const socket = getSocket();
         if (socket) {
             socket.on("newMessage", handleNewMessage);
-            socket.on("messageStatusUpdate", handleStatusUpdate);
         }
     },
 
@@ -105,7 +71,7 @@ export const useMessageStore = create((set) => ({
         const socket = getSocket();
         if (socket) {
             socket.off("newMessage", handleNewMessage);
-            socket.off("messageStatusUpdate", handleStatusUpdate);
         }
-    },
+    }
+
 }));
