@@ -1,13 +1,12 @@
-// components/Chat.jsx
 import { useRef, useEffect } from 'react';
 import { useMessageStore } from '../store/useMessageStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { useMatchStore } from '../store/useMatchStore';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { UserX, Loader } from 'lucide-react';
+import { UserX, Loader, Clock, CheckCheck } from 'lucide-react';
 import MessageInput from '../components/MessageInput';
-import { Clock, CheckCheck } from 'lucide-react';
+
 const Chat = () => {
   const { messages, getMessages, subscribeToMessages, unSubscribeFromMessages,
     setCurrentChatUserId, updateMessageStatus } = useMessageStore();
@@ -17,20 +16,57 @@ const Chat = () => {
   const match = matches.find(m => m?._id === id);
   
   const messagesEndRef = useRef(null);
+  const observerRef = useRef(null);
 
-  // Auto-scroll to the latest message when new messages arrive
+  // Auto-scroll to bottom and set up Intersection Observer
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+    
+    if (!authUser || !id || messages.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const messageId = entry.target.getAttribute('data-message-id');
+            const message = messages.find(msg => msg._id === messageId);
+
+            if (message && 
+                message.receiver === authUser._id && 
+                message.status === 'delivered') {
+              updateMessageStatus(message._id, 'seen');
+            }
+          }
+        });
+      },
+      { threshold: 0.5 } // 50% of message must be visible
+    );
+
+    observerRef.current = observer;
+
+    // Observe all messages
+    document.querySelectorAll('[data-message-id]').forEach(el => {
+      observer.observe(el);
+    });
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [authUser, id, messages, updateMessageStatus]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-// Mark messages as delivered when chat is opened
+
+  // Mark messages as delivered when chat is opened
   useEffect(() => {
     if (authUser && id && messages.length > 0) {
       const undeliveredMessages = messages.filter(
-        msg => msg.receiver === authUser._id && msg.status === 'sent'
+        msg => msg.receiver === authUser._id && 
+               msg.sender === id && 
+               msg.status === 'sent'
       );
       
       if (undeliveredMessages.length > 0) {
@@ -39,28 +75,6 @@ const Chat = () => {
         });
       }
     }
-  }, [authUser, id, messages, updateMessageStatus]);
-
-  // Mark messages as seen when user views them
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible' && authUser && id && messages.length > 0) {
-        const unseenMessages = messages.filter(
-          msg => msg.receiver === authUser._id && msg.status === 'delivered'
-        );
-        
-        if (unseenMessages.length > 0) {
-          unseenMessages.forEach(msg => {
-            updateMessageStatus(msg._id, 'seen');
-          });
-        }
-      }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
   }, [authUser, id, messages, updateMessageStatus]);
 
   useEffect(() => {
@@ -94,12 +108,12 @@ const Chat = () => {
         <h2 className='text-xl font-semibold text-gray-800'>{match.name}</h2>
       </div>
       
-      {/* Messages container with constrained height */}
+      {/* Messages container */}
       <div 
         className='flex-grow overflow-y-auto mb-4 bg-white rounded-lg shadow p-4'
         style={{ 
-          maxHeight: 'calc(100vh - 280px)', // Adjust based on your header/input heights
-          minHeight: '200px' // Ensure it's never too small
+          maxHeight: 'calc(100vh - 280px)',
+          minHeight: '200px'
         }}
       >
         {messages.length === 0 ? (
@@ -110,6 +124,7 @@ const Chat = () => {
           messages.map((msg, idx) => (
             <div 
               key={msg._id || idx}
+              data-message-id={msg._id}
               className={`mb-3 ${msg.sender === authUser._id ? "text-right" : "text-left"}`}
             >
               <span className={`inline-block p-3 rounded-lg max-w-xs lg:max-w-md ${
@@ -122,52 +137,26 @@ const Chat = () => {
                   {msg.content}
                 </div>
               </span>
-              {/* Enhanced status row */}
               <div className={`flex items-center mt-1 ${
                     msg.sender === authUser._id ? 'justify-end' : 'justify-start'
                   }`}>
                     <span className="text-xs text-gray-500 mr-2">
                       {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
-                    
                     {msg.sender === authUser._id && (
                       <div className="relative group flex items-center">
-                        {msg.status === 'sent' && (
-                          <>
-                            <Clock size={14} className="text-gray-400" />
-                            <div className="absolute hidden group-hover:block bottom-full mb-1 right-0 bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap shadow-lg">
-                              Sent
-                            </div>
-                          </>
-                        )}
-                        {msg.status === 'delivered' && (
-                          <>
-                            <CheckCheck size={14} className="text-gray-400" />
-                            <div className="absolute hidden group-hover:block bottom-full mb-1 right-0 bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap shadow-lg">
-                              Delivered
-                            </div>
-                          </>
-                        )}
-                        {msg.status === 'seen' && (
-                          <>
-                            <CheckCheck size={14} className="text-blue-400" />
-                            <div className="absolute hidden group-hover:block bottom-full mb-1 right-0 bg-gray-800 text-white text-xs rounded px-2 py-1 whitespace-nowrap shadow-lg">
-                              Seen
-                            </div>
-                          </>
-                        )}
+                        {msg.status === 'sent' && <Clock size={14} className="text-gray-400" />}
+                        {msg.status === 'delivered' && <CheckCheck size={14} className="text-gray-400" />}
+                        {msg.status === 'seen' && <CheckCheck size={14} className="text-blue-400" />}
                       </div>
                     )}
                 </div>
-
-
             </div>
           ))
         )}
         <div ref={messagesEndRef} />
       </div>
       
-      {/* Input stays fixed at bottom */}
       <div className='mt-auto'>
         <MessageInput match={match} onSend={scrollToBottom} />
       </div>
