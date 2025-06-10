@@ -32,7 +32,7 @@ const Sidebar = () => {
                 <div className='flex-grow overflow-y-auto p-4 z-10 relative'>{ isLoadingMyMatches ? <LoadingState /> : matches.length === 0
                 ? <NoMatchesFound /> : (matches.map(match => (
                     <Link key={match._id} to={`/chat/${match._id}`}>
-                        <div className='flex items-center mb-4 cursor-pointer hover:bg-blue-50 p-2 rounded-lg transition-colors duration-300'>
+                        <div className='flex items-center mb-4 cursor-pointer hover:bg-blue-100 p-2 rounded-lg transition-colors duration-300'>
                             <img src={match.profilePicture || "/avatar.png"} alt={match.name} className='w-12 h-12 rounded-full mr-3 border-2 border-rose-300' />
                             <h3 className='font-semibold text-black'>{match.name}</h3>
                         </div>
@@ -42,7 +42,7 @@ const Sidebar = () => {
         </div>
         <button className='lg:hidden fixed top-4 left-4 bg-blue-500 text-white p-2 rounded-md z-0'
         onClick={toggleSidebar}>
-            <MessageCircle size={25} />
+            <MessageCircle size={30} />
         </button>
     </>
   )

@@ -127,6 +127,20 @@ const SwipeZone = () => {
                         <div className='flex-1 bg-white p-5'>
                             {/* Key Details Grid */}
                             <div className='grid grid-cols-2 gap-3 mb-4'>
+                                {/*
+                                {user.gender && (
+                                    <div className='flex items-center'>
+                                        <FaWeight className='text-yellow-500 mr-2' />
+                                        <span className='text-sm'>{user.gender}</span>
+                                    </div>
+                                )}
+                                {user.genderPreference && (
+                                    <div className='flex items-center'>
+                                        <FaWeight className='text-yellow-500 mr-2' />
+                                        <span className='text-sm'>{user.genderPreference}</span>
+                                    </div>
+                                )}
+                                 */}
                                 {user.job && (
                                     <div className='flex items-center'>
                                         <FaBriefcase className='text-blue-500 mr-2' />

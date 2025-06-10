@@ -149,8 +149,18 @@ const generateRandomUser = (gender, index) => {
   const today = new Date();
   const dob = new Date(today.getFullYear() - age, today.getMonth(), today.getDate());
   
-  const height = HEIGHT_OPTIONS[Math.floor(Math.random() * HEIGHT_OPTIONS.length)];
-  const weight = WEIGHT_OPTIONS[Math.floor(Math.random() * WEIGHT_OPTIONS.length)];
+  // Generate realistic height first (in cm)
+  const height = gender === "male" 
+    ? Math.floor(Math.random() * (190 - 165 + 1) + 165) // Male: 165-190cm
+    : Math.floor(Math.random() * (180 - 155 + 1) + 155); // Female: 155-180cm
+
+  // Calculate weight based on BMI (18.5-24.9 healthy range)
+  const minBMI = 18.5;
+  const maxBMI = 24.9;
+  const heightInMeters = height / 100;
+  const minWeight = Math.round(minBMI * heightInMeters * heightInMeters);
+  const maxWeight = Math.round(maxBMI * heightInMeters * heightInMeters);
+  const weight = Math.floor(Math.random() * (maxWeight - minWeight + 1) + minWeight);
 
   return {
     name,
@@ -170,8 +180,8 @@ const generateRandomUser = (gender, index) => {
     religion: RELIGION_OPTIONS[Math.floor(Math.random() * RELIGION_OPTIONS.length)],
     location: getRandomLocation(),
     hobbies: generateRandomHobbies(),
-    verified: Math.random() > 0.2, // 80% verified
-    lastLogin: new Date(Date.now() - Math.floor(Math.random() * 30 * 24 * 60 * 60 * 1000)) // Last 30 days
+    verified: Math.random() > 0.2,
+    lastLogin: new Date(Date.now() - Math.floor(Math.random() * 30 * 24 * 60 * 60 * 1000))
   };
 };
 
@@ -181,8 +191,8 @@ const seedUsers = async () => {
 
     await User.deleteMany({});
 
-    const maleUsers = Array(20).fill().map((_, i) => generateRandomUser("male", i));
-    const femaleUsers = Array(20).fill().map((_, i) => generateRandomUser("female", i + 20));
+    const maleUsers = Array(10).fill().map((_, i) => generateRandomUser("male", i));
+    const femaleUsers = Array(10).fill().map((_, i) => generateRandomUser("female", i + 10));
 
     const allUsers = [...maleUsers, ...femaleUsers];
 

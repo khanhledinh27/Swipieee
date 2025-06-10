@@ -95,25 +95,38 @@ export const getUserProfiles = async (req, res) => {
         const maxBirthDate = new Date();
         maxBirthDate.setFullYear(maxBirthDate.getFullYear() - minAge);
 
-        // 2. Base query (gender, age, excluded users)
+        // 2. New gender matching logic:
+        // User will see profiles where:
+        // - The profile's gender matches user's genderPreference (or if user's preference is "both")
+        // - The profile's genderPreference includes user's gender (or is "both")
+        const genderConditions = [];
+        
+        // Handle current user's gender preference
+        if (currentUser.genderPreference === "both") {
+            genderConditions.push({
+                gender: { $in: ["male", "female"] }
+            });
+        } else {
+            genderConditions.push({
+                gender: currentUser.genderPreference
+            });
+        }
+        
+        // Handle profile's gender preference (must include current user's gender)
+        genderConditions.push({
+            $or: [
+                { genderPreference: currentUser.gender },
+                { genderPreference: "both" }
+            ]
+        });
+
+        // 3. Base query (excluded users + age + gender logic)
         const baseQuery = {
             $and: [
                 { _id: { $ne: currentUser._id } },
                 { _id: { $nin: currentUser.likedBy } },
                 { _id: { $nin: currentUser.dislikedBy } },
                 { _id: { $nin: currentUser.matches } },
-                // Gender preference
-                { 
-                    gender: currentUser.genderPreference === "both" 
-                        ? { $in: ["male", "female"] } 
-                        : currentUser.genderPreference 
-                },
-                // Their preference includes current user's gender
-                { 
-                    genderPreference: { 
-                        $in: [currentUser.gender, "both"] 
-                    } 
-                },
                 // Age range
                 { 
                     dateOfBirth: { 
@@ -121,10 +134,12 @@ export const getUserProfiles = async (req, res) => {
                         $lte: maxBirthDate 
                     } 
                 },
+                // Gender conditions
+                ...genderConditions
             ],
         };
 
-        // 3. Add hobby matching with minimum 2 shared hobbies
+        // 4. Add hobby matching with minimum 2 shared hobbies
         if (currentUser.hobbies?.length >= 2) {
             // Create an array of $and conditions for each hobby combination
             const hobbyCombinations = [];
@@ -149,13 +164,13 @@ export const getUserProfiles = async (req, res) => {
             });
         }
 
-        // 4. Fetch users with smart sorting
+        // 5. Fetch users with smart sorting
         const users = await User.find(baseQuery)
             .select("-password -verified -tokens") // Exclude sensitive data
             .lean() // Convert to plain JS objects for aggregation
             .exec();
 
-        // 5. Enhanced sorting by relevance (hobby matches + last activity)
+        // 6. Enhanced sorting by relevance (hobby matches + last activity)
         const sortedUsers = users
             .map(user => {
                 // Calculate hobby match score
@@ -197,7 +212,8 @@ export const getUserProfiles = async (req, res) => {
             meta: {
                 hobbyMatches: currentUser.hobbies?.length >= 2,
                 totalResults: sortedUsers.length,
-                minHobbyMatches: 2 // Indicate we're requiring 2+ shared hobbies
+                minHobbyMatches: 2, // Indicate we're requiring 2+ shared hobbies,
+                genderLogic: "reciprocal" // Indicate the gender matching logic used
             }
         });
 
