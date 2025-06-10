@@ -16,13 +16,13 @@ const getNotificationStyle = (swipeNotification) => {
 
 const getNotificationText = (swipeNotification) => {
     if (swipeNotification === "liked") {
-        return "Liked!"
+        return "Đã thích!"
     }
     if (swipeNotification === "passed") {
-        return "Passed"
+        return "Đã bỏ qua!"
     }
     if (swipeNotification === "matched") {
-        return "Matched"
+        return "Đã ghép đôi thành công!"
     }
     return "";
 }

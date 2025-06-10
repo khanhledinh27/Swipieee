@@ -112,7 +112,7 @@ const ProfilePage = () => {
       <Header />
       <div className='flex-grow flex flex-col py-4 px-4 sm:px-6 lg:px-8'>
         <div className='sm:mx-auto sm:w-full sm:max-w-6xl'>
-          <h2 className='text-center text-2xl sm:text-3xl font-extrabold text-gray-900'>Your Profile</h2>
+          <h2 className='text-center text-2xl sm:text-3xl font-extrabold text-gray-900'>Hồ sơ của bạn</h2>
         </div>
 
         {/* Changed to flex-col on mobile */}
@@ -140,13 +140,13 @@ const ProfilePage = () => {
                 onClick={() => fileInputRef.current.click()}
                 className='w-1/2 sm:w-auto inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rose-600 hover:bg-rose-700'
               >
-                Change Avatar
+                Đổi ảnh đại diện
               </button>
               
               {/* Photo Album Section - Improved for mobile */}
               <div className="mt-4 w-full">
-                <h3 className="text-lg font-medium text-gray-900 mb-2">Photo Album</h3>
-                <p className="text-sm text-gray-500 mb-3">Maximum 4 photos</p>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">Album ảnh</h3>
+                <p className="text-sm text-gray-500 mb-3">Tối đa 4 ảnh</p>
                 
                 <div className="grid grid-cols-3 sm:grid-cols-2 gap-2 mb-3">
                   {photoAlbum.map((photo, index) => (
@@ -173,7 +173,7 @@ const ProfilePage = () => {
                     onClick={() => albumInputRef.current.click()}
                     className="w-full inline-flex justify-center items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-rose-600 hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
                   >
-                    Add Photos ({4 - photoAlbum.length} remaining)
+                    Thêm ảnh ({4 - photoAlbum.length} còn lại)
                   </button>
                 )}
                 
@@ -200,10 +200,10 @@ const ProfilePage = () => {
             <form onSubmit={handleSubmit} className='p-4 lg:p-6 space-y-4 lg:space-y-6'>
               {/* Basic Info Section */}
               <div className="border-b border-gray-200 pb-4 lg:pb-6">
-                <h3 className="text-lg lg:text-xl font-semibold text-gray-900 mb-3 lg:mb-4">Basic Information</h3>
+                <h3 className="text-lg lg:text-xl font-semibold text-gray-900 mb-3 lg:mb-4">Thông tin cơ bản</h3>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4'>
                   <div>
-                    <label className='block text-sm font-medium text-gray-500'>Name</label>
+                    <label className='block text-sm font-medium text-gray-500'>Tên</label>
                     <input 
                       type='text' 
                       value={name} 
@@ -213,7 +213,7 @@ const ProfilePage = () => {
                     />
                   </div>
                   <div>
-                    <label className='block text-sm font-medium text-gray-500'>Date of Birth</label>
+                    <label className='block text-sm font-medium text-gray-500'>Ngày sinh</label>
                     <input 
                       type='date' 
                       value={dateOfBirth} 
@@ -222,32 +222,32 @@ const ProfilePage = () => {
                       className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     />
                     <div className='text-xs sm:text-sm text-gray-500 mt-1'>
-                      Age: {computeAge(dateOfBirth)}
+                      Tuổi: {computeAge(dateOfBirth)}
                     </div>
                   </div>
                   <div>
-                    <label className='block text-sm font-medium text-gray-500'>Gender</label>
+                    <label className='block text-sm font-medium text-gray-500'>Giới tính</label>
                     <select
                       value={gender}
                       onChange={(e) => setGender(e.target.value)}
                       className='mt-1 block w-full px-3 py-2 text-sm border-gray-300 rounded-md focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
-                      <option value="" disabled>Select Gender</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
+                      <option value="" disabled>Chọn giới tính</option>
+                      <option value="male">Nam</option>
+                      <option value="female">Nữ</option>
                     </select>
                   </div>
                   <div>
-                    <label className='block text-sm font-medium text-gray-500'>Gender Preference</label>
+                    <label className='block text-sm font-medium text-gray-500'>Bạn thích giới tính nào?</label>
                     <select
                       value={genderPreference}
                       onChange={(e) => setGenderPreference(e.target.value)}
                       className='mt-1 block w-full px-3 py-2 text-sm border-gray-300 rounded-md focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
-                      <option value="" disabled>Select Preference</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="both">Both</option>
+                      <option value="" disabled>Chọn giới tính bạn thích</option>
+                      <option value="male">Nam</option>
+                      <option value="female">Nữ</option>
+                      <option value="both">Cả hai</option>
                     </select>
                   </div>
                 </div>
@@ -255,26 +255,26 @@ const ProfilePage = () => {
 
               {/* About Section */}
               <div className="border-b border-gray-200 pb-4 lg:pb-6">
-                <h3 className="text-lg lg:text-xl font-semibold text-gray-900 mb-3 lg:mb-4">About</h3>
+                <h3 className="text-lg lg:text-xl font-semibold text-gray-900 mb-3 lg:mb-4">Về bạn</h3>
                 <div>
-                  <label className='block text-sm font-medium text-gray-500'>Bio</label>
+                  <label className='block text-sm font-medium text-gray-500'>Tiểu sử</label>
                   <textarea 
                     rows={3} 
                     value={bio} 
                     onChange={(e) => setBio(e.target.value)}
                     className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
-                    placeholder="Tell others about yourself..."
+                    placeholder="Cho mọi người biết một xíu về tiểu sử của bạn nhé..."
                   />
                 </div>
               </div>
 
               {/* Additional Information Section */}
               <div className="border-b border-gray-200 pb-4 lg:pb-6">
-                <h3 className="text-lg lg:text-xl font-semibold text-gray-900 mb-3 lg:mb-4">Additional Information</h3>
+                <h3 className="text-lg lg:text-xl font-semibold text-gray-900 mb-3 lg:mb-4">Thông tin thêm</h3>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4'>
                   {/* Hobbies - Improved for mobile */}
                   <div className='md:col-span-2 relative'>
-                    <label className='block text-sm font-medium text-gray-500 mb-1'>Hobbies</label>
+                    <label className='block text-sm font-medium text-gray-500 mb-1'>Sở thích</label>
                     <div 
                       className="mt-1 p-2 border border-gray-300 rounded-md cursor-pointer flex flex-wrap gap-2 min-h-10"
                       onClick={() => setShowHobbyDropdown(!showHobbyDropdown)}
@@ -289,7 +289,7 @@ const ProfilePage = () => {
                           </span>
                         ))
                       ) : (
-                        <span className='text-gray-400 text-sm'>Select hobbies</span>
+                        <span className='text-gray-400 text-sm'>Chọn sở thích</span>
                       )}
                     </div>
                     
@@ -318,65 +318,65 @@ const ProfilePage = () => {
 
                   {/* Other fields */}
                   <div>
-                    <label className='block text-sm font-medium text-gray-500'>Job</label>
+                    <label className='block text-sm font-medium text-gray-500'>Nghề nghiệp</label>
                     <select
                       value={job}
                       onChange={(e) => setJob(e.target.value)}
                       className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
-                      <option value="" disabled>Select Job</option>
+                      <option value="" disabled>Chọn nghề nghiệp</option>
                       {JOB_OPTIONS.map(option => (
                         <option key={option} value={option}>{option}</option>
                       ))}
                     </select>
                   </div>
                   <div>
-                    <label className='block text-sm font-medium text-gray-500'>Religion</label>
+                    <label className='block text-sm font-medium text-gray-500'>Tôn giáo</label>
                     <select
                       value={religion}
                       onChange={(e) => setReligion(e.target.value)}
                       className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
-                      <option value="" disabled>Select Religion</option>
+                      <option value="" disabled>Chọn tôn giáo</option>
                       {RELIGION_OPTIONS.map(option => (
                         <option key={option} value={option}>{option}</option>
                       ))}
                     </select>
                   </div>
                   <div>
-                    <label className='block text-sm font-medium text-gray-500'>Height (cm)</label>
+                    <label className='block text-sm font-medium text-gray-500'>Chiều cao (cm)</label>
                     <select
                       value={height}
                       onChange={(e) => setHeight(e.target.value)}
                       className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
-                      <option value="" disabled>Select Height</option>
+                      <option value="" disabled>Chọn chiều cao</option>
                       {HEIGHT_OPTIONS.map(option => (
                         <option key={option} value={option}>{option} cm</option>
                       ))}
                     </select>
                   </div>
                   <div>
-                    <label className='block text-sm font-medium text-gray-500'>Weight (kg)</label>
+                    <label className='block text-sm font-medium text-gray-500'>Cân nặng (kg)</label>
                     <select
                       value={weight}
                       onChange={(e) => setWeight(e.target.value)}
                       className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
-                      <option value="" disabled>Select Weight</option>
+                      <option value="" disabled>Chọn cân nặng</option>
                       {WEIGHT_OPTIONS.map(option => (
                         <option key={option} value={option}>{option} kg</option>
                       ))}
                     </select>
                   </div>
                   <div className='md:col-span-2'>
-                    <label className='block text-sm font-medium text-gray-500'>Location</label>
+                    <label className='block text-sm font-medium text-gray-500'>Vị trí</label>
                     <select
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
                       className='mt-1 block w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500'
                     >
-                      <option value="" disabled>Select Location</option>
+                      <option value="" disabled>Chọn vị trí</option>
                       {LOCATION_OPTIONS.map(option => (
                         <option key={option} value={option}>{option}</option>
                       ))}
@@ -392,7 +392,7 @@ const ProfilePage = () => {
                   className='w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
                   disabled={loading}
                 >
-                  {loading ? 'Updating Profile...' : 'Update Profile'}
+                  {loading ? 'Đang cập nhật hồ sơ...' : 'Cập nhật hồ sơ'}
                 </button>
               </div>
             </form>

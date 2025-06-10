@@ -52,19 +52,19 @@ const Header = () => {
                                         <Link to="/profile" className='flex px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 items-center'
                                         onClick={() => setDropdownOpen(false)}>
                                             <User className='mr-2' size={16}/>
-                                            Profile
+                                            Hồ sơ
                                         </Link>
                                         <button onClick={logout} className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center'>
                                             <LogOut className='mr-2' size={16}/>
-                                            Logout
+                                            Đăng xuất
                                         </button>
                                     </div>
                                 )}
                             </div>
                         ) : (
                             <>
-                                <Link to='/auth' className='text-white font-semibold hover:text-red-300 transition duration-150 ease-in-out'>Login</Link>
-                                <Link to='/auth' className='bg-white text-blue-500 font-semibold px-4 py-2 rounded-lg hover:bg-blue-100 transition duration-150 ease-in-out'>Sign Up</Link>
+                                <Link to='/auth' className='text-white font-semibold hover:text-red-300 transition duration-150 ease-in-out'>Đăng nhập</Link>
+                                <Link to='/auth' className='bg-white text-blue-500 font-semibold px-4 py-2 rounded-lg hover:bg-blue-100 transition duration-150 ease-in-out'>Đăng ký</Link>
                             </>
                         )}
                     </div>
@@ -85,17 +85,17 @@ const Header = () => {
                                     <Link to="/profile" className='flex px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 items-center'
                                     onClick={() => setMobileMenuOpen(false)}>
                                         <User className='mr-2' size={16}/>
-                                        Profile
+                                        Hồ sơ
                                     </Link>
                                     <button onClick={logout} className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center'>
                                         <LogOut className='mr-2' size={16}/>
-                                        Logout
+                                        Đăng xuất
                                     </button>
                                 </>
                             ) : (
                                 <>
-                                    <Link to='/auth' className='text-white font-semibold hover:text-red-300 transition duration-150 ease-in-out'>Login</Link>
-                                    <Link to='/auth' className='bg-white text-blue-500 font-semibold px-4 py-2 rounded-lg hover:bg-blue-100 transition duration-150 ease-in-out'>Sign Up</Link>
+                                    <Link to='/auth' className='text-white font-semibold hover:text-red-300 transition duration-150 ease-in-out'>Đăng nhập</Link>
+                                    <Link to='/auth' className='bg-white text-blue-500 font-semibold px-4 py-2 rounded-lg hover:bg-blue-100 transition duration-150 ease-in-out'>Đăng ký</Link>
                                 </>
                             )}
                         </div>

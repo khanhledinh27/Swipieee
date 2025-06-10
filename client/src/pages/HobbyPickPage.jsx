@@ -39,7 +39,7 @@ const HobbyPickPage = () => {
             Pick Your Hobbies
           </h1>
           <p className="text-gray-600 text-sm md:text-base">
-            Select at least 3 hobbies that interest you. This helps us find better matches.
+            Vui lòng chọn ít nhất 3 sở thích mà bạn yêu thích. Điều này sẽ giúp chúng tôi hiểu rõ hơn về bạn và cải thiện trải nghiệm của bạn trên nền tảng.
           </p>
         </div>
 
@@ -60,10 +60,10 @@ const HobbyPickPage = () => {
             ))}
           </div>
           <p className="text-xs text-gray-500 mt-3">
-            Selected: {selectedHobbies.length} {selectedHobbies.length === 1 ? "hobby" : "hobbies"}
+            Đã chọn: {selectedHobbies.length} {selectedHobbies.length === 1 ? "sở thích" : "sở thích"}.
             {!hasMinimumHobbies && (
               <span className="text-red-500 ml-2">
-                (Select {3 - selectedHobbies.length} more to continue)
+                (Chọn {3 - selectedHobbies.length} để tiếp tục)
               </span>
             )}
           </p>
@@ -81,16 +81,16 @@ const HobbyPickPage = () => {
           {loading ? (
             <>
               <Loader className="animate-spin mr-2 h-4 w-4" />
-              Saving...
+              Đang lưu...
             </>
           ) : (
-            "Save Hobbies"
+            "Lưu sở thích"
           )}
         </button>
 
         {hasMinimumHobbies && (
           <p className="text-xs text-gray-500 mt-3 text-center">
-            You can always update these later in your profile settings
+            Bạn có thể thay đổi sở thích của mình bất cứ lúc nào trong phần cài đặt hồ sơ.
           </p>
         )}
       </div>

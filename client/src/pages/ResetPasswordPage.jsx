@@ -36,21 +36,21 @@ const ResetPasswordPage = () => {
   return (
         <div className="min-h-screen flex items-center justify-center p-4 bg-slate-400">
             <div className="relative z-10 bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-                <h2 className="text-2xl font-bold mb-6 text-center">Reset Password</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center">Đặt lại mật khẩu</h2>
                 <form className='space-y-6'
                     onSubmit={handleSubmit}>
                     {/*Password*/}
                     <div className="mb-6">
                         <input className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm
                         placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                        type="password" required value={password} placeholder="New Password" 
+                        type="password" required value={password} placeholder="Mật khẩu mới" 
                         onChange={(e) => setPassword(e.target.value)}/>
                     </div>
                     {/*Confirm Password*/}
                     <div className="mb-6">
                         <input className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm
                         placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                        type="password" required value={confirmPassword} placeholder="Confirm Password" 
+                        type="password" required value={confirmPassword} placeholder="Xác nhận mật khẩu" 
                         onChange={(e) => setConfirmPassword(e.target.value)}/>
                     </div>
 
@@ -59,7 +59,7 @@ const ResetPasswordPage = () => {
                         <button className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white 
                             ${ loading ? "bg-blue-500 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" }`} type="submit"
                             disabled={loading}>
-                            {loading ? "Resetting" : "Reset Password"}
+                            {loading ? "Đang đặt lại..." : "Đặt lại mật khẩu"}
                         </button>
                     </div>
                 </form>

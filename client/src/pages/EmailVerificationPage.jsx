@@ -46,10 +46,10 @@ const EmailVerificationPage = () => {
          <div className="min-h-screen flex items-center justify-center p-4 bg-slate-400">
             <div className="relative z-10 bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
                 <h2 className='text-3xl font-bold text-center text-black mb-6'>
-                        Verify your email
+                        Vui lòng xác thực email của bạn
                     </h2>
                     <p className='text-center mb-6 text-black'>
-                        Enter the verification code sent to your email.
+                        Nhập mã xác thực đã được gửi đến email của bạn để hoàn tất quá trình đăng ký.
                     </p>
                     <form onSubmit={(e) => { 
                     e.preventDefault() 
@@ -76,7 +76,7 @@ const EmailVerificationPage = () => {
                             <button className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white 
                                 ${ loading ? "bg-blue-500 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" }`} type="submit"
                                 disabled={loading}>
-                                {loading ? "Verifying..." : "Verify Email"}
+                                {loading ? "Đang xác thực..." : "Xác thực Email"}
                             </button>
                         </div>
                     </form>

@@ -26,7 +26,7 @@ const ForgotPasswordPage = () => {
                 
                 {!isSubmitted ? (
                   <form onSubmit={handleSubmit}>
-                    <p className='text-center mb-6 text-black'>Enter your email address to reset your password</p>
+                    <p className='text-center mb-6 text-black'>Vui lòng nhập địa chỉ email để tiến hành quá trình đặt lại mật khẩu!</p>
                     {/*Email*/}
                       <input className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
                       id="email" name="email" type="email" placeholder='Email Address'
@@ -36,7 +36,7 @@ const ForgotPasswordPage = () => {
                       <button className={`w-full mt-3 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white 
                         ${ loading ? "bg-blue-500 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" }`} type="submit"
                         disabled={loading}>
-                        {loading ? "Sending..." : "Send Reset Password Link"}
+                        {loading ? "Đang gửi..." : "Gửi Link đặt lại mật khẩu"}
                       </button>
                   </form>
                 ) : (
@@ -46,15 +46,14 @@ const ForgotPasswordPage = () => {
                       <Mail className='h-8 w-8 text-white' />
                     </div>
                     <p className='text-black mb-6'>
-                      If an account exists for {email}, you will receive a password reset link
-                      shortly.
+                      Nếu như tài khoản của bạn tồn tại với {email}, bạn sẽ nhận được một email để đặt lại mật khẩu trong vài giây tới.
                     </p>
                   </div>
                 )}
                 <div className='px-1 py-4 bg-opacity-50 flex justify-end'>
                     <Link to={"/auth"} className='text-sm text-black
                     hover:text-blue-500 flex items-center'>
-                      <ArrowLeft className='h-4 w-4 mr-2'/> Back to Login
+                      <ArrowLeft className='h-4 w-4 mr-2'/> Trở về trang đăng nhập
                     </Link>
                 </div>
             </div>

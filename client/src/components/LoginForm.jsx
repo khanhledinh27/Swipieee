@@ -33,7 +33,7 @@ const LoginForm = () => {
                     {/*Password*/}
                     <div>
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                            Password
+                            Mật khẩu
                         </label>
                         <input className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100
                         placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
@@ -41,7 +41,7 @@ const LoginForm = () => {
                     </div>
                     <div className="flex items-center justify-between">
                         <Link to="/forgot-password" className="text-sm text-blue-500 hover:text-blue-700">
-                            Forgot Password?
+                            Quên mật khẩu?
                         </Link>
                     </div>
                     {/*Button*/}
@@ -49,7 +49,7 @@ const LoginForm = () => {
                         <button className={`w-full py-2 px-4 rounded-md text-sm font-medium text-white 
                             ${ loading ? "bg-blue-500 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" }`} type="submit"
                             disabled={loading}>
-                            {loading ? "Signing In..." : "Sign In"}
+                            {loading ? "Đang đăng nhập..." : "Đăng nhập"}
                         </button>
                     </div>
                 </form>

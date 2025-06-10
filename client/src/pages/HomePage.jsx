@@ -54,8 +54,8 @@ const NoMoreProfiles = () => {
   return (
     <div className='flex flex-col items-center justify-center h-full text-center p-8'>
       <Frown className='text-blue-500 mb-6' size={80} />
-      <h2 className='text-3xl font-bold text-gray-800 mb-4'>No more profiles</h2>
-      <p className='text-xl mb-6 text-gray-600'>Try again later</p>
+      <h2 className='text-3xl font-bold text-gray-800 mb-4'>Hiện tại chưa có hồ sơ phù hợp</h2>
+      <p className='text-xl mb-6 text-gray-600'>Vui lòng thử lại sau!</p>
     </div>
   )
 };
@@ -75,7 +75,7 @@ const LoadingUI = () => {
           </div>
         </div>
       </div>
-      <p className='text-xl mb-6 text-gray-600'>Loading...</p>
+      <p className='text-xl mb-6 text-gray-600'>Đang tải...</p>
     </div>
   )
 }

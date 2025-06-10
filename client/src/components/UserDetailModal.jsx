@@ -72,7 +72,7 @@ const UserDetailModal = ({ user, onClose }) => {
                                 <div className="flex items-start">
                                     <FaBriefcase className="text-blue-500 mt-1 mr-3 flex-shrink-0" />
                                     <div>
-                                        <p className="text-xs text-gray-500">Profession</p>
+                                        <p className="text-xs text-gray-500">Nghề nghiệp</p>
                                         <p className="text-sm font-medium">{user.job}</p>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@ const UserDetailModal = ({ user, onClose }) => {
                                 <div className="flex items-start">
                                     <FaPrayingHands className="text-purple-500 mt-1 mr-3 flex-shrink-0" />
                                     <div>
-                                        <p className="text-xs text-gray-500">Religion</p>
+                                        <p className="text-xs text-gray-500">Tôn giáo</p>
                                         <p className="text-sm font-medium">{user.religion}</p>
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@ const UserDetailModal = ({ user, onClose }) => {
                                 <div className="flex items-start">
                                     <FaRulerVertical className="text-green-500 mt-1 mr-3 flex-shrink-0" />
                                     <div>
-                                        <p className="text-xs text-gray-500">Height</p>
+                                        <p className="text-xs text-gray-500">Chiều cao</p>
                                         <p className="text-sm font-medium">{user.height} cm</p>
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@ const UserDetailModal = ({ user, onClose }) => {
                                 <div className="flex items-start">
                                     <FaWeight className="text-yellow-500 mt-1 mr-3 flex-shrink-0" />
                                     <div>
-                                        <p className="text-xs text-gray-500">Weight</p>
+                                        <p className="text-xs text-gray-500">Cân nặng</p>
                                         <p className="text-sm font-medium">{user.weight} kg</p>
                                     </div>
                                 </div>
@@ -113,13 +113,13 @@ const UserDetailModal = ({ user, onClose }) => {
                         <div>
                             <div className="flex items-center mb-3">
                                 <FaUser className="text-pink-500 mr-2" />
-                                <h3 className="text-sm font-semibold text-gray-700">About {user.name}</h3>
+                                <h3 className="text-sm font-semibold text-gray-700">Về {user.name}</h3>
                             </div>
                             <div className="bg-gray-50 p-4 rounded-lg">
                                 {user.bio ? (
                                     <p className="text-gray-700 text-sm leading-relaxed">{user.bio}</p>
                                 ) : (
-                                    <p className="text-gray-400 italic text-sm">No bio provided</p>
+                                    <p className="text-gray-400 italic text-sm">Không có tiểu sử</p>
                                 )}
                             </div>
                         </div>
@@ -129,7 +129,7 @@ const UserDetailModal = ({ user, onClose }) => {
                             <div>
                                 <div className="flex items-center mb-3">
                                     <GiWeightLiftingUp className="text-indigo-500 mr-2" />
-                                    <h3 className="text-sm font-semibold text-gray-700">Hobbies & Interests</h3>
+                                    <h3 className="text-sm font-semibold text-gray-700">Các thói quen & sở thích</h3>
                                 </div>
                                 <div className="flex flex-wrap gap-2">
                                     {user.hobbies.map((hobby, index) => (
@@ -147,7 +147,7 @@ const UserDetailModal = ({ user, onClose }) => {
                         {/* Photo Album */}
                         {user.photoAlbum?.length > 0 && (
                             <div>
-                                <h3 className="text-sm font-semibold text-gray-700 mb-3">Photo Album</h3>
+                                <h3 className="text-sm font-semibold text-gray-700 mb-3">Album ảnh</h3>
                                 <div className="grid grid-cols-3 gap-2">
                                     {user.photoAlbum.map((photo, index) => (
                                         <div key={index} className="relative aspect-square group overflow-hidden rounded-lg">

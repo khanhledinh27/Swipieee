@@ -171,12 +171,12 @@ const SwipeZone = () => {
                             <div className='mb-4'>
                                 <h3 className='text-sm font-semibold text-gray-700 mb-2 flex items-center'>
                                     <FaUser className='mr-1 text-pink-500' />
-                                    About {user.name}
+                                    Về {user.name}
                                 </h3>
                                 {user.bio ? (
                                     <p className='text-gray-600 text-sm line-clamp-2'>{user.bio}</p>
                                 ) : (
-                                    <p className='text-gray-400 italic text-sm'>No bio provided</p>
+                                    <p className='text-gray-400 italic text-sm'>Không có tiểu sử!</p>
                                 )}
                             </div>
                         </div>

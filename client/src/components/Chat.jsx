@@ -118,7 +118,7 @@ const Chat = () => {
       >
         {messages.length === 0 ? (
           <div className='h-full flex items-center justify-center'>
-            <p className='text-center text-gray-500'>Start your conversation with {match.name}</p>
+            <p className='text-center text-gray-500'>Bắt đầu cuộc trò chuyền với {match.name}</p>
           </div>
         ) : (
           messages.map((msg, idx) => (
@@ -168,13 +168,13 @@ const MatchNotFound = () => (
   <div className='h-full flex flex-col items-center justify-center bg-gray-100 bg-opacity-50 bg-dot-pattern'>
     <div className='bg-white p-8 rounded-lg shadow-md text-center'>
       <UserX size={64} className="mx-auto text-blue-500 mb-4" />
-      <h2 className='text-2xl font-semibold text-gray-800 mb-2'>Match Not Found</h2>
-      <p className='text-gray-600'>The match you are looking for does not exist.</p>
+      <h2 className='text-2xl font-semibold text-gray-800 mb-2'>Không tìm thấy</h2>
+      <p className='text-gray-600'>Người bạn ghép đôi hiện không tìm thấy!</p>
       <Link 
         to='/' 
         className='mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-300 inline-block'
       >
-        Go back to Home Page 
+        Trở về trang chủ
       </Link>
     </div>
   </div>
@@ -184,8 +184,8 @@ const LoadingMessagesUI = () => (
   <div className='h-full flex flex-col items-center justify-center bg-gray-100 bg-opacity-50'>
     <div className='bg-white p-8 rounded-lg shadow-md text-center'>
       <Loader size={48} className="mx-auto text-blue-500 animate-spin mb-4" />
-      <h2 className='text-2xl font-semibold text-gray-800 mb-2'>Loading Chat</h2>
-      <p className='text-gray-600'>Please wait a sec...</p>
+      <h2 className='text-2xl font-semibold text-gray-800 mb-2'>Đang tải tin nhắn</h2>
+      <p className='text-gray-600'>Vui lòng đợi trong ít giây...</p>
       <div className='mt-6 flex justify-center space-x-2'>
         <div className='w-3 h-3 bg-blue-500 rounded-full animate-bounce' style={{ animationDelay: '0s' }} />
         <div className='w-3 h-3 bg-blue-500 rounded-full animate-bounce' style={{ animationDelay: '0.2s' }} />           

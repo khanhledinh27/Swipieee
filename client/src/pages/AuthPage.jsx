@@ -35,7 +35,7 @@ const AuthPage = () => {
             >
                 <div className="w-full max-w-md">
                     <h2 className="text-2xl font-bold mb-8 text-center" style={{ fontFamily: 'inherit' }}>
-                        <span className="font-semibold">Welcome to <span className="italic font-bold">Swipieee</span></span>
+                        <span className="font-semibold">Chào mừng bạn đến với <span className="italic font-bold">Swipieee</span></span>
                     </h2>
                     <motion.div
                         className="bg-white shadow-xl rounded-lg p-8"
@@ -46,7 +46,7 @@ const AuthPage = () => {
                         {isLogin ? <LoginForm /> : <RegisterForm />}
                         <div className="mt-8 text-center">
                             <p className="text-sm text-gray-600">
-                                {isLogin ? "New to Swipieee?" : "Already have an account!"}
+                                {isLogin ? "Lần đầu đến với Swipieee?" : "Đã có tài khoản!"}
                             </p>
                             <motion.button
                                 onClick={() => setIsLogin((prevIsLogin) => !prevIsLogin)}
@@ -54,7 +54,7 @@ const AuthPage = () => {
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
                             >
-                                {isLogin ? "Create a new account" : "Sign in to your account"}
+                                {isLogin ? "Tạo tài khoản mới" : "Đăng nhập ngay"}
                             </motion.button>
                         </div>
                     </motion.div>
