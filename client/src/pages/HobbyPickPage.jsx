@@ -36,7 +36,7 @@ const HobbyPickPage = () => {
       <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 md:p-8">
         <div className="mb-8">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
-            Pick Your Hobbies
+            Hãy chọn sở thích của bạn
           </h1>
           <p className="text-gray-600 text-sm md:text-base">
             Vui lòng chọn ít nhất 3 sở thích mà bạn yêu thích. Điều này sẽ giúp chúng tôi hiểu rõ hơn về bạn và cải thiện trải nghiệm của bạn trên nền tảng.
