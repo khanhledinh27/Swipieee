@@ -25,6 +25,7 @@ const Chat = () => {
     if (!authUser || !id || messages.length === 0) return;
 
     const observer = new IntersectionObserver(
+      //DOM elements that are intersecting
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {

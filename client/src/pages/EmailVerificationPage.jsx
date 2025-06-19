@@ -16,7 +16,7 @@ const EmailVerificationPage = () => {
                 newToken[i] = pasteToken[i] || "";
             }
             setToken(newToken);
-
+        //focus on the next empty input after pasting
         const lastFilledIndex = newToken.findLastIndex((digit) => digit !== "");
         const focusIndex = lastFilledIndex < 5 ? lastFilledIndex + 1 : 5;
         inputRef.current[focusIndex].focus();
@@ -29,13 +29,13 @@ const EmailVerificationPage = () => {
             }
         }
     }
-
+    //handle backspace if input is empty and index > 0
     const handleKeyDown = (index, e) => {
         if (e.key === "Backspace" && !token[index] && index > 0) {
             inputRef.current[index - 1].focus();
     }
     }
-    //auto submit
+    //auto submit when all inputs are filled
     useEffect(() => {
         if (token.every(digit => digit !== '')){
             verifyEmail(token)

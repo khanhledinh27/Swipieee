@@ -17,7 +17,6 @@ const AuthPage = () => {
         <div className="min-h-screen flex items-center justify-center bg-white">
             {/* Left Illustration */}
             <div className="hidden md:flex flex-1 items-center justify-center">
-                {/* Replace src with your illustration path or SVG */}
                 <img
                     src={CoupleLoveSVG}
                     alt="Login Illustration"

@@ -8,7 +8,7 @@ const RegisterForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [gender, setGender] = useState("");
-    const [dateOfBirth, setDateOfBirth] = useState(""); // changed from age
+    const [dateOfBirth, setDateOfBirth] = useState("");
     const [genderPreference, setGenderPreference] = useState("");
     const { signup, loading } = useAuthStore();
 

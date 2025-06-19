@@ -23,8 +23,9 @@ const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
 initializeSocket(httpServer)
-
+//req.body parser
 app.use(express.json());
+//req.cookies parser
 app.use(cookieParser());
 app.use(cors({
   origin: process.env.CLIENT_URL,

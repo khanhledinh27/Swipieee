@@ -67,7 +67,7 @@ const ProfilePage = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
+      const reader = new FileReader(); // Create a new FileReader instance
       reader.onloadend = () => {
         setProfilePicture(reader.result);
       }
@@ -95,6 +95,7 @@ const ProfilePage = () => {
     });
   };
 
+  //Remove photo from album based on index
   const removePhoto = (index) => {
     setPhotoAlbum(prev => prev.filter((_, i) => i !== index));
   };

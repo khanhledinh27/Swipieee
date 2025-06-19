@@ -90,15 +90,13 @@ export const getUserProfiles = async (req, res) => {
         
         // Calculate birth date range for age filtering
         const minBirthDate = new Date();
+        //Example: If current user is 30, minAge = 25, maxAge = 35
         minBirthDate.setFullYear(minBirthDate.getFullYear() - maxAge - 1);
         
         const maxBirthDate = new Date();
         maxBirthDate.setFullYear(maxBirthDate.getFullYear() - minAge);
 
         // 2. New gender matching logic:
-        // User will see profiles where:
-        // - The profile's gender matches user's genderPreference (or if user's preference is "both")
-        // - The profile's genderPreference includes user's gender (or is "both")
         const genderConditions = [];
         
         // Handle current user's gender preference
@@ -173,7 +171,7 @@ export const getUserProfiles = async (req, res) => {
         // 6. Enhanced sorting by relevance (hobby matches + last activity)
         const sortedUsers = users
             .map(user => {
-                // Calculate hobby match score
+                // Calculate hobby match score between current user and each user
                 const hobbyMatches = currentUser.hobbies?.length 
                     ? user.hobbies?.filter(hobby => 
                         currentUser.hobbies.includes(hobby))
@@ -182,9 +180,9 @@ export const getUserProfiles = async (req, res) => {
 
                 return {
                     ...user,
-                    hobbyMatches: hobbyMatches, // Include matched hobbies
-                    hobbyScore: hobbyScore, // For sorting
-                    // Add match percentage (optional)
+                    hobbyMatches: hobbyMatches,
+                    hobbyScore: hobbyScore,
+                    // Add match percentage (optional) For example: 2 / 3 * 100 = 66.67%
                     matchPercentage: Math.round(
                         (hobbyMatches.length / Math.max(
                             currentUser.hobbies.length, 
@@ -212,8 +210,8 @@ export const getUserProfiles = async (req, res) => {
             meta: {
                 hobbyMatches: currentUser.hobbies?.length >= 2,
                 totalResults: sortedUsers.length,
-                minHobbyMatches: 2, // Indicate we're requiring 2+ shared hobbies,
-                genderLogic: "reciprocal" // Indicate the gender matching logic used
+                minHobbyMatches: 2,
+                genderLogic: "reciprocal"
             }
         });
 
